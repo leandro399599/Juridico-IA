@@ -28,6 +28,7 @@ import { RecentBooksModal, BookHistoryItem } from './components/RecentBooksModal
 import { SpeedGauge } from './components/SpeedGauge';
 import { extractTextFromPdf, PageData } from './utils/pdfParser';
 import { SAMPLE_DOCUMENTS, SampleDocument } from './data/sampleDocs';
+import { DictionaryPanel } from './components/DictionaryPanel';
 
 // Código atualizado do app.py embutido para download e visualização
 const APP_PY_CODE = `"""
@@ -492,6 +493,10 @@ export default function App() {
   const [isCleaningWithGemini, setIsCleaningWithGemini] = useState(false);
   const [statusMessage, setStatusMessage] = useState('Pronto para leitura');
   const [viewMode, setViewMode] = useState<'rsvp' | 'text' | 'python'>('rsvp');
+
+  // Estado do Dicionário
+  const [isDictionaryOpen, setIsDictionaryOpen] = useState(false);
+  const [dictionaryWord, setDictionaryWord] = useState('');
 
   // Referências
   const rsvpTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -1107,13 +1112,32 @@ export default function App() {
                 </div>
               </div>
 
-              {/* 1. ÁREA CENTRAL RSVP (EXIBIÇÃO GIGANTE ORP) */}
+              {/* 1. ÁREA CENTRAL RSVP (EXIBIÇÃO GIGANTE ORP CONTÍGUA COM HOVER/CLIQUE) */}
               <RsvpDisplay
                 word={currentWord}
                 nextWord={words[currentWordIdx + 1]}
                 theme={theme}
                 fontSize={fontSize}
                 showNextPreview={showNextPreview}
+                onWordClick={(w) => {
+                  setIsPlaying(false);
+                  setDictionaryWord(w);
+                  setIsDictionaryOpen(true);
+                }}
+              />
+
+              {/* PAINEL DE DICIONÁRIO NA PARTE INFERIOR (QUANDO ABERTO) */}
+              <DictionaryPanel
+                word={dictionaryWord || currentWord}
+                isOpen={isDictionaryOpen}
+                onClose={() => setIsDictionaryOpen(false)}
+                onSpeakWord={(w) => {
+                  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                    const u = new SpeechSynthesisUtterance(w);
+                    u.lang = 'pt-BR';
+                    window.speechSynthesis.speak(u);
+                  }
+                }}
               />
 
               {/* 2. PAINEL INFERIOR DE CONTEXTO ("MEIA PÁGINA" COM MARCA-TEXTO) */}
