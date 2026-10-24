@@ -1,0 +1,6 @@
+{
+  "name": "LeitorDinamico - RSVP & Acessibilidade",
+  "description": "Leitor dinâmico RSVP (Rapid Serial Visual Presentation) para PDFs e documentos com OCR, síntese de voz (TTS) para acessibilidade, refinamento via Google Gemini e gerador do aplicativo desktop Python (CustomTkinter + PyInstaller).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

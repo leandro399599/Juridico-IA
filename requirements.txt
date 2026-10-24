@@ -1,0 +1,23 @@
+# ==============================================================================
+# DEPENDÊNCIAS DO LEITORDIDAMICO (PYTHON 3.10+)
+# ==============================================================================
+# Interface Gráfica Moderna
+customtkinter>=5.2.0
+
+# Leitura e Manipulação de Arquivos PDF (inclui busca de palavras e extração de coordenadas)
+PyMuPDF>=1.23.0
+
+# Renderização do Painel de Contexto Visual e Manipulação de Imagem
+Pillow>=10.0.0
+
+# Reconhecimento Óptico de Caracteres (OCR)
+pytesseract>=0.3.10
+
+# Síntese de Voz Offline (TTS SAPI5 Windows)
+pyttsx3>=2.90
+
+# Google Gemini API
+google-genai>=2.4.0
+
+# Empacotador para Executável Windows .exe
+pyinstaller>=6.3.0
